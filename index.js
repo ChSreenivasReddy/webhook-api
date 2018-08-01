@@ -12,11 +12,10 @@ restService.use(bodyParser.urlencoded({
 restService.use(bodyParser.json());
 
 restService.post('/echo', function(req, res) {
-    var speech = req.body.result.parameters.echoText;
-	var response="";
+    var speech = req.body.result && req.body.result.parameters && req.body.result.parameters.echoText ? req.body.result.parameters.echoText : "Seems like some problem. Speak again."
     return res.json({
-                   "fulfillmentText": response,
-                   "fulfillmentMessages": [{"text": {"text": ["This message from Claim API Service"]}}],
-				   "source":""
-				  });
+        speech: speech,
+        displayText: speech,
+        source: 'webhook-echo-sample'
+    });
 });
